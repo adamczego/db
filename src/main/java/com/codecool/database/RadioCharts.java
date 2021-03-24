@@ -55,8 +55,10 @@ public class RadioCharts {
         List<Artist> artists = new ArrayList<>();
 
         String q =
-            "SELECT *" +
-            "FROM music_broadcast;";
+            "SELECT * " +
+            "FROM music_broadcast " +
+            "GROUP BY song " +
+            "ORDER BY COUNT(song);";
 
         try(Connection connection = this.getConnection();
             PreparedStatement ps = connection.prepareStatement(q)) {
