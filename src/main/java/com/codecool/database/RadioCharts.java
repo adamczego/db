@@ -18,13 +18,16 @@ public class RadioCharts {
         this.DB_PASSWORD = DB_PASSWORD;
     }
 
+
     public String getMostPlayedSong() {
 
         List<Song> songs = new ArrayList<>();
 
         String q =
             "SELECT * " +
-            "FROM music_broadcast ORDER BY times_aired DESC;";
+            "FROM music_broadcast " +
+            "GROUP BY artist, song " +
+            "ORDER BY times_aired DESC, COUNT(song) DESC;";
 
         try(Connection connection = this.getConnection();
             PreparedStatement ps = connection.prepareStatement(q)) {
@@ -38,14 +41,12 @@ public class RadioCharts {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return "";
         }
 
-
-        return songs.isEmpty()
-            ? ""
-            : songs.get(0).getTitle();
-
+        return
+            songs.isEmpty() ? "" : songs.get(0).getTitle();
     }
 
 
