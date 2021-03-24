@@ -41,7 +41,6 @@ public class RadioCharts {
             return "";
         }
 
-        songs.forEach(x -> System.out.println(x.getTitle()));
 
         return songs.isEmpty()
             ? ""
